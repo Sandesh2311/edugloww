@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGlow - Smarter Learning Paths</title>
+    <meta name="description" content="EduGlow provides smart learning paths with verified tutors and interactive lessons.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        'primary-dark': '#4338ca',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="dark:bg-gray-900 min-h-screen">
+    <nav class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold">
+                    <span class="text-primary">Edu</span>Glow
+                </a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">Home</a>
+                <a href="#tutors" class="text-gray-700 dark:text-gray-300 hover:text-primary">Tutors</a>
+                <a href="about.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">About</a>
+                <a href="blogs.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">Blog</a>
+                <a href="careers.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">Careers</a>
+                <a href="contact.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i data-feather="moon" class="hidden dark:block"></i>
+                    <i data-feather="sun" class="dark:hidden"></i>
+                </button>
+                <div class="relative group">
+                    <a id="auth-link" href="login.html" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md transition">
+                        Login
+                    </a>
+                    <div class="absolute hidden group-hover:block bg-white dark:bg-gray-800 shadow-lg rounded-md p-2 w-44 mt-1 right-0 z-10">
+                        <a id="student-login-link" href="login.html?role=student" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Student Login</a>
+                        <a id="teacher-login-link" href="login.html?role=teacher" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Teacher Login</a>
+                        <a href="signup.html" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Sign Up</a>
+                        <button id="logout-link" class="hidden w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Logout</button>
+                    </div>
+                </div>
+</div>
+        </div>
+    </nav>
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="flex flex-col lg:flex-row gap-8 items-center mb-16">
+            <div class="lg:w-2/3">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
+                    Smart learning paths with <span class="text-primary">personalized tutoring</span>
+                </h1>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl">
+                    Connect with verified tutors across any subject. Experience interactive lessons designed for your learning style.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input 
+                        id="tutor-search"
+                        type="text" 
+                        placeholder="Search subjects or skills..." 
+                        class="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+                    >
+                    <button id="find-tutors-btn" class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg transition">
+                        Find Tutors
+                    </button>
+                </div>
+                
+                <div class="flex flex-wrap gap-4 mt-8">
+                    <div class="flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                        <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center">
+                            <i data-feather="check-circle" class="text-primary"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold dark:text-white">Verified Tutors</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Background-checked & rated</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                        <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center">
+                            <i data-feather="clock" class="text-primary"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold dark:text-white">Flexible Timing</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">24/7 availability</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                        <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center">
+                            <i data-feather="book-open" class="text-primary"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold dark:text-white">Interactive Tools</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Whiteboard, sharing & more</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/3 w-full bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Free trial lesson</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">Experience our platform with a complimentary session.</p>
+                
+                <form id="trialForm" class="space-y-4">
+                    <div>
+                        <input 
+                            id="trial-name"
+                            type="text" 
+                            placeholder="Your Name" 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+                        >
+                    </div>
+                    <div>
+                        <input 
+                            id="trial-phone"
+                            type="tel" 
+                            placeholder="Phone Number" 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+                        >
+                    </div>
+                    <div>
+                        <input
+                            id="trial-subject"
+                            list="subject-options"
+                            placeholder="Enter subject or skill (e.g. Algebra, Physics)"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+                        >
+                        <datalist id="subject-options">
+                            <option value="Mathematics"></option>
+                            <option value="Physics"></option>
+                            <option value="Chemistry"></option>
+                            <option value="English"></option>
+                            <option value="Biology"></option>
+                            <option value="Algebra"></option>
+                            <option value="Calculus"></option>
+                            <option value="Trigonometry"></option>
+                            <option value="Computer Science"></option>
+                            <option value="Programming"></option>
+                        </datalist>
+                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-4 rounded-lg transition">
+                        Get Free Trial
+                    </button>
+                </form>
+            </div>
+        </section>
+        <!-- Features Section -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">Why Choose EduGlow</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-feather="award" class="text-primary"></i>
+                    </div>
+                    <h3 class="font-bold text-lg dark:text-white mb-2">Top Educators</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Learn from subject matter experts with verified credentials.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-feather="video" class="text-primary"></i>
+                    </div>
+                    <h3 class="font-bold text-lg dark:text-white mb-2">Interactive Platform</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Real-time collaboration with whiteboard and screen sharing.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-feather="clock" class="text-primary"></i>
+                    </div>
+                    <h3 class="font-bold text-lg dark:text-white mb-2">Flexible Scheduling</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Book lessons anytime that fits your schedule.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Tutors Section -->
+        <section id="tutors" class="mb-16">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Featured Tutors</h2>
+                <a href="login.html?role=student" class="text-sm text-primary hover:text-primary-dark">Book a session</a>
+            </div>
+            <div id="tutorsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tutor cards injected here -->
+            </div>
+        </section>
+
+        <!-- Subjects Section -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">Popular Subjects</h2>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <button type="button" data-subject="Mathematics" class="subject-pill flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-2">
+                        <i data-feather="divide-square" class="text-primary"></i>
+                    </div>
+                    <span class="font-medium dark:text-white">Mathematics</span>
+                </button>
+                <button type="button" data-subject="Physics" class="subject-pill flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-2">
+                        <i data-feather="atom" class="text-primary"></i>
+                    </div>
+                    <span class="font-medium dark:text-white">Physics</span>
+                </button>
+                <button type="button" data-subject="Chemistry" class="subject-pill flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-2">
+                        <i data-feather="flask" class="text-primary"></i>
+                    </div>
+                    <span class="font-medium dark:text-white">Chemistry</span>
+                </button>
+                <button type="button" data-subject="English" class="subject-pill flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-2">
+                        <i data-feather="book" class="text-primary"></i>
+                    </div>
+                    <span class="font-medium dark:text-white">English</span>
+                </button>
+                <button type="button" data-subject="Programming" class="subject-pill flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-2">
+                        <i data-feather="code" class="text-primary"></i>
+                    </div>
+                    <span class="font-medium dark:text-white">Programming</span>
+                </button>
+                <button type="button" data-subject="Music" class="subject-pill flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-2">
+                        <i data-feather="music" class="text-primary"></i>
+                    </div>
+                    <span class="font-medium dark:text-white">Music</span>
+                </button>
+            </div>
+        </section>
+<!-- Testimonials Section -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">What students say</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold">
+                            A
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Aman S.</h4>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600">"Great tutor! My grades improved after three lessons."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold">
+                            R
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Riya P.</h4>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600">"Flexible schedule and friendly teaching style."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold">
+                            S
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Shivam K.</h4>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600">"Highly recommend for exam preparation."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <custom-footer></custom-footer>
+    
+    <script src="components/tutor-card.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="script.js"></script>    <script>
+        feather.replace();
+
+        const API_BASE = window.API_BASE || "";
+        const fallbackTutors = [
+            {id: 1, name: 'Priya Sharma', subject: 'Mathematics', level: 'Class 9-12', rating: 4.9, price: 'INR 600/hr', city: 'Delhi', image: 'http://static.photos/people/200x200/1'},
+            {id: 2, name: 'Rohan Verma', subject: 'Physics', level: 'Class 11-12', rating: 4.8, price: 'INR 700/hr', city: 'Delhi', image: 'http://static.photos/people/200x200/2'},
+            {id: 3, name: 'Neha Gupta', subject: 'English', level: 'All', rating: 4.7, price: 'INR 450/hr', city: 'Bengaluru', image: 'http://static.photos/people/200x200/3'},
+            {id: 4, name: 'Amit Joshi', subject: 'Chemistry', level: 'Class 9-12', rating: 4.6, price: 'INR 550/hr', city: 'Mumbai', image: 'http://static.photos/people/200x200/4'},
+            {id: 5, name: 'Sakshi Rao', subject: 'Computer Science', level: 'College', rating: 4.8, price: 'INR 800/hr', city: 'Kolkata', image: 'http://static.photos/people/200x200/5'},
+            {id: 6, name: 'Vikram Patel', subject: 'Maths', level: 'Class 6-10', rating: 4.5, price: 'INR 300/hr', city: 'Delhi', image: 'http://static.photos/people/200x200/6'}
+        ];
+
+        let allTutors = [];
+
+        function renderTutors(tutors) {
+            const tutorsGrid = document.getElementById('tutorsGrid');
+            if (!tutorsGrid) return;
+            tutorsGrid.innerHTML = '';
+            tutors.forEach(tutor => {
+                const tutorCard = document.createElement('custom-tutor-card');
+                tutorCard.setAttribute('name', tutor.name);
+                tutorCard.setAttribute('subject', tutor.subject);
+                tutorCard.setAttribute('level', tutor.level);
+                tutorCard.setAttribute('rating', tutor.rating);
+                tutorCard.setAttribute('price', tutor.price);
+                tutorCard.setAttribute('city', tutor.city);
+                tutorCard.setAttribute('image', tutor.image);
+                tutorCard.setAttribute('id', tutor.id);
+                tutorsGrid.appendChild(tutorCard);
+            });
+        }
+
+        window.contactTutor = function(id) {
+            alert(`Contact request sent for tutor ID: ${id}`);
+        };
+
+        window.bookTutor = async function(id) {
+            if (!String(id).startsWith('teacher-')) {
+                alert('Booking is available for verified teachers only.');
+                return;
+            }
+            // ensure student session
+            try {
+                const meRes = await fetch(`${API_BASE}/api/me`, { credentials: 'include' });
+                if (meRes.ok) {
+                    const meData = await meRes.json();
+                    if (meData.user && meData.user.role !== 'student') {
+                        alert('Please login as a student to book a tutor.');
+                        window.location.href = 'login.html?role=student';
+                        return;
+                    }
+                }
+            } catch (e) {
+                // ignore and proceed to booking; server will enforce role
+            }
+            const phone = prompt('Enter your mobile number for the teacher to contact you:');
+            if (!phone) {
+                alert('Mobile number is required to book.');
+                return;
+            }
+            const cleanedPhone = phone.replace(/\s+/g, '');
+            if (!/^[0-9+\-]{7,15}$/.test(cleanedPhone)) {
+                alert('Please enter a valid phone number (digits only, 7-15 chars).');
+                return;
+            }
+            const teacherId = String(id).replace('teacher-', '');
+            try {
+                const res = await fetch(`${API_BASE}/api/bookings`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ teacher_id: teacherId, phone: cleanedPhone })
+                });
+                const data = await res.json();
+                if (res.status === 401) {
+                    window.location.href = 'login.html?role=student';
+                    return;
+                }
+                if (!res.ok) {
+                    alert(data.error || 'Booking failed');
+                    return;
+                }
+                alert('Booking request sent. The teacher will contact you soon.');
+            } catch (err) {
+                alert('Network error. Please try again.');
+            }
+        };
+
+        async function loadTutors() {
+            try {
+                const res = await fetch(`${API_BASE}/api/tutors`);
+                if (!res.ok) throw new Error('Failed to load tutors');
+                const data = await res.json();
+                allTutors = data.tutors || fallbackTutors;
+                renderTutors(allTutors);
+            } catch (err) {
+                allTutors = fallbackTutors;
+                renderTutors(allTutors);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTutors();
+
+            const findTutorsBtn = document.getElementById('find-tutors-btn');
+            if (findTutorsBtn) {
+                findTutorsBtn.addEventListener('click', () => {
+                    const section = document.getElementById('tutors');
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            }
+
+            // Session check to keep user logged in across pages
+            fetch(`${API_BASE}/api/me`, { credentials: 'include' })
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (!data || !data.user) return;
+                    const role = data.user.role || 'student';
+                    const authLink = document.getElementById('auth-link');
+                    const studentLoginLink = document.getElementById('student-login-link');
+                    const teacherLoginLink = document.getElementById('teacher-login-link');
+                    const logoutLink = document.getElementById('logout-link');
+
+                    if (authLink) {
+                        authLink.textContent = 'Dashboard';
+                        authLink.href = role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
+                    }
+                    if (studentLoginLink) studentLoginLink.classList.add('hidden');
+                    if (teacherLoginLink) teacherLoginLink.classList.add('hidden');
+                    if (logoutLink) {
+                        logoutLink.classList.remove('hidden');
+                        logoutLink.addEventListener('click', async () => {
+                            await fetch(`${API_BASE}/api/auth/logout`, { method: 'POST', credentials: 'include' });
+                            window.location.href = 'index.html';
+                        });
+                    }
+                });
+
+            const searchInput = document.getElementById('tutor-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const q = e.target.value.trim().toLowerCase();
+                    if (!q) {
+                        renderTutors(allTutors);
+                        return;
+                    }
+                    const filtered = allTutors.filter(t => {
+                        return (
+                            (t.name || '').toLowerCase().includes(q) ||
+                            (t.subject || '').toLowerCase().includes(q) ||
+                            (t.level || '').toLowerCase().includes(q) ||
+                            ((t.skills || []).join(' ') || '').toLowerCase().includes(q) ||
+                            (t.city || '').toLowerCase().includes(q)
+                        );
+                    });
+                    renderTutors(filtered);
+                });
+            }
+
+            document.querySelectorAll('.subject-pill').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const subject = btn.getAttribute('data-subject') || '';
+                    const q = subject.toLowerCase();
+                    if (searchInput) {
+                        searchInput.value = subject;
+                    }
+                    const filtered = allTutors.filter(t => {
+                        return (
+                            (t.name || '').toLowerCase().includes(q) ||
+                            (t.subject || '').toLowerCase().includes(q) ||
+                            (t.level || '').toLowerCase().includes(q) ||
+                            ((t.skills || []).join(' ') || '').toLowerCase().includes(q) ||
+                            (t.city || '').toLowerCase().includes(q)
+                        );
+                    });
+                    renderTutors(filtered);
+                    const section = document.getElementById('tutors');
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+            
+            // Form submission
+            document.getElementById('trialForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const payload = {
+                    name: document.getElementById('trial-name').value,
+                    phone: document.getElementById('trial-phone').value,
+                    subject: document.getElementById('trial-subject').value
+                };
+                const cleanPhone = (payload.phone || '').replace(/\s+/g, '');
+                if (!/^[0-9+\-]{7,15}$/.test(cleanPhone)) {
+                    alert('Please enter a valid phone number (digits only, 7-15 chars).');
+                    return;
+                }
+                payload.phone = cleanPhone;
+                const subjectQuery = (payload.subject || '').toLowerCase();
+                try {
+                    const res = await fetch(`${API_BASE}/api/trials`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) {
+                        const data = await res.json();
+                        alert(data.error || 'Submission failed');
+                        return;
+                    }
+                    alert('Thanks for your interest! We will contact you shortly with tutor matches.');
+                    this.reset();
+
+                    if (subjectQuery) {
+                        const matches = allTutors.filter(t => {
+                            return (
+                                (t.subject || '').toLowerCase().includes(subjectQuery) ||
+                                (t.level || '').toLowerCase().includes(subjectQuery) ||
+                                ((t.skills || []).join(' ') || '').toLowerCase().includes(subjectQuery) ||
+                                (t.name || '').toLowerCase().includes(subjectQuery)
+                            );
+                        });
+                        renderTutors(matches);
+                        const section = document.getElementById('tutors');
+                        if (section) {
+                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                } catch (err) {
+                    alert('Network error. Please try again.');
+                }
+            });
+        });
+    </script>
+<script src="https://huggingface.co/deepsite/deepsite-badge.js"></script>
+<script src="config.js"></script>`n</body>
+</html>

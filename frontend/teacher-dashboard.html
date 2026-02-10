@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard | EduGlow</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="dark:bg-gray-900 min-h-screen">
+    <nav class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold">
+                    <span class="text-primary">Edu</span>Glow
+                </a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i data-feather="moon" class="hidden dark:block"></i>
+                    <i data-feather="sun" class="dark:hidden"></i>
+                </button>
+                <button id="logout-btn" class="text-gray-700 dark:text-gray-300 hover:text-primary">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div class="lg:col-span-1">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm sticky top-8">
+                    <div class="flex flex-col items-center mb-6">
+                        <img src="http://static.photos/people/200x200/10" alt="Teacher" class="w-24 h-24 rounded-full mb-4">
+                        <h2 class="text-xl font-bold dark:text-white" id="teacher-name">Sandesh</h2>
+                        <p class="text-gray-600 dark:text-gray-300" id="teacher-subject">Mathematics</p>
+                    </div>
+                    <div class="space-y-4">
+                        <a href="#profile" class="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-primary">
+                            <i data-feather="user"></i>
+                            Profile
+                        </a>
+                        <a href="#lessons" class="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-primary">
+                            <i data-feather="book"></i>
+                            Lessons
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-3">
+                <div id="profile" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-8">
+                    <h2 class="text-2xl font-bold dark:text-white mb-6">My Skills</h2>
+                    
+                    <form id="skills-form">
+                        <div class="mb-6">
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Add New Skill</label>
+                            <div class="flex gap-2">
+                                <input 
+                                    type="text" 
+                                    id="new-skill" 
+                                    placeholder="e.g. Calculus, Python, IELTS Preparation" 
+                                    class="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+                                >
+                                <button type="button" id="add-skill" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">My Skills</label>
+                            <div id="skills-list" class="flex flex-wrap gap-2">
+                                <!-- Skills will be added here dynamically -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-8">
+                    <h2 class="text-2xl font-bold dark:text-white mb-6">Profile Settings</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Hourly Rate (INR)</label>
+                            <input
+                                type="text"
+                                id="teacher-price"
+                                placeholder="e.g. INR 600/hr"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+                            >
+                        </div>
+                        <div class="flex items-end">
+                            <button type="button" id="save-profile" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition">
+                                Save Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-8">
+                    <h2 class="text-2xl font-bold dark:text-white mb-6">My Profile Preview</h2>
+                    <div id="teacher-preview">
+                        <custom-tutor-card 
+                            name="John Doe" 
+                            subject="Mathematics" 
+                            level="Class 9-12" 
+                            rating="4.8" 
+                            price="INR 600/hr" 
+                            city="Delhi" 
+                            image="http://static.photos/people/200x200/10"
+                            id="1">
+                        </custom-tutor-card>
+                    </div>
+                </div>
+
+                <div id="lessons" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-8">
+                    <h2 class="text-2xl font-bold dark:text-white mb-6">Lessons</h2>
+                    <div id="lessons-list" class="space-y-3 text-gray-700 dark:text-gray-300">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+
+                <div id="trial-requests" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-8">
+                    <h2 class="text-2xl font-bold dark:text-white mb-6">Trial Requests (Matching Your Skills)</h2>
+                    <div id="trials-list" class="space-y-3 text-gray-700 dark:text-gray-300">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="components/tutor-card.js"></script>
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+
+        const API_BASE = window.API_BASE || "";
+        let teacherData = {
+            name: "",
+            subject: "",
+            skills: [],
+            rating: 0,
+            price: "",
+            city: "",
+            image: ""
+        };
+
+        function renderProfile() {
+            document.getElementById('teacher-name').textContent = teacherData.name || 'Teacher';
+            document.getElementById('teacher-subject').textContent = teacherData.subject || 'Subject';
+
+            const skillsList = document.getElementById('skills-list');
+            skillsList.innerHTML = '';
+            teacherData.skills.forEach(skill => {
+                skillsList.appendChild(createSkillElement(skill));
+            });
+
+            updatePreviewCard();
+            feather.replace();
+        }
+
+        async function loadProfile() {
+            const res = await fetch(`${API_BASE}/api/teacher/profile`, { credentials: 'include' });
+            if (res.status === 401) {
+                window.location.href = 'login.html?role=teacher';
+                return;
+            }
+            const data = await res.json();
+            teacherData = {
+                name: data.profile.name,
+                subject: data.profile.subject,
+                skills: data.skills || [],
+                rating: data.profile.rating || 0,
+                price: data.profile.price || 'INR 600/hr',
+                city: data.profile.city || 'City',
+                image: data.profile.image || 'http://static.photos/people/200x200/10'
+            };
+            renderProfile();
+            const priceInput = document.getElementById('teacher-price');
+            if (priceInput) {
+                priceInput.value = teacherData.price || '';
+            }
+        }
+
+        function renderLessons(bookings) {
+            const container = document.getElementById('lessons-list');
+            if (!bookings.length) {
+                container.innerHTML = '<p>No lessons yet.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            bookings.forEach(b => {
+                const item = document.createElement('div');
+                item.className = 'p-3 rounded-lg border border-gray-200 dark:border-gray-700';
+                const date = new Date(b.created_at).toLocaleString();
+                item.innerHTML = `
+                    <div class="font-semibold">${b.subject || 'Lesson'} <span class="text-sm text-gray-500">(${b.status})</span></div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">${date}</div>
+                    <div class="text-sm">Student: ${b.student_name} ${b.student_email ? '(' + b.student_email + ')' : ''}</div>
+                    <div class="text-sm">Phone: ${b.student_phone || 'N/A'}</div>
+                    <div class="text-sm">Price: ${b.price || 'INR 0'}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        async function loadLessons() {
+            const res = await fetch(`${API_BASE}/api/teacher/bookings`, { credentials: 'include' });
+            if (!res.ok) {
+                renderLessons([]);
+                return;
+            }
+            const data = await res.json();
+            renderLessons(data.bookings || []);
+        }
+
+        function renderTrials(trials) {
+            const container = document.getElementById('trials-list');
+            if (!trials.length) {
+                container.innerHTML = '<p>No matching trial requests yet.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            trials.forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'p-3 rounded-lg border border-gray-200 dark:border-gray-700';
+                const tz = 'Asia/Kolkata';
+                const date = new Date(t.created_at).toLocaleString('en-IN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                    timeZone: tz
+                });
+                item.innerHTML = `
+                    <div class="font-semibold">${t.subject || 'Trial Request'}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">${date} (${tz})</div>
+                    <div class="text-sm">Student: ${t.student_name || 'Student'}</div>
+                    <div class="text-sm">Phone: ${t.student_phone || 'N/A'}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        async function loadTrials() {
+            const res = await fetch(`${API_BASE}/api/teacher/trials`, { credentials: 'include' });
+            if (!res.ok) {
+                renderTrials([]);
+                return;
+            }
+            const data = await res.json();
+            renderTrials(data.trials || []);
+        }
+
+        function createSkillElement(skill) {
+            const skillElement = document.createElement('div');
+            skillElement.className = 'bg-primary/10 text-primary dark:text-primary-dark px-3 py-1 rounded-full flex items-center gap-2';
+            skillElement.innerHTML = `
+                ${skill}
+                <button class="remove-skill" data-skill="${skill}">
+                    <i data-feather="x" class="w-3 h-3"></i>
+                </button>
+            `;
+
+            skillElement.querySelector('.remove-skill').addEventListener('click', async function() {
+                const skillToRemove = this.getAttribute('data-skill');
+                const res = await fetch(`${API_BASE}/api/teacher/skills`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ name: skillToRemove })
+                });
+                if (res.ok) {
+                    teacherData.skills = teacherData.skills.filter(s => s !== skillToRemove);
+                    renderProfile();
+                }
+            });
+
+            return skillElement;
+        }
+
+        function updatePreviewCard() {
+            const previewCard = document.querySelector('#teacher-preview custom-tutor-card');
+            if (previewCard) {
+                previewCard.setAttribute('name', teacherData.name || 'Teacher');
+                previewCard.setAttribute('subject', teacherData.subject || 'Subject');
+                previewCard.setAttribute('level', (teacherData.skills || []).join(', '));
+                previewCard.setAttribute('rating', teacherData.rating || 0);
+                previewCard.setAttribute('price', teacherData.price || 'INR 600/hr');
+                previewCard.setAttribute('city', teacherData.city || 'City');
+                previewCard.setAttribute('image', teacherData.image || 'http://static.photos/people/200x200/10');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            loadLessons();
+            loadTrials();
+
+            // Poll for new trial requests every 5 seconds
+            setInterval(() => {
+                loadTrials();
+            }, 5000);
+
+            document.getElementById('add-skill').addEventListener('click', async function() {
+                const newSkill = document.getElementById('new-skill').value.trim();
+                if (!newSkill || teacherData.skills.includes(newSkill)) return;
+                const res = await fetch(`${API_BASE}/api/teacher/skills`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ name: newSkill })
+                });
+                if (res.ok) {
+                    teacherData.skills.push(newSkill);
+                    document.getElementById('new-skill').value = '';
+                    renderProfile();
+                }
+            });
+
+            const saveProfileBtn = document.getElementById('save-profile');
+            if (saveProfileBtn) {
+                saveProfileBtn.addEventListener('click', async function() {
+                    const priceValue = document.getElementById('teacher-price').value.trim();
+                    const res = await fetch(`${API_BASE}/api/teacher/profile`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ price: priceValue })
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                        teacherData.price = data.profile.price || priceValue;
+                        renderProfile();
+                        loadTrials();
+                        alert('Profile updated.');
+                    } else {
+                        alert(data.error || 'Failed to update profile.');
+                    }
+                });
+            }
+
+            document.getElementById('logout-btn').addEventListener('click', async function() {
+                await fetch(`${API_BASE}/api/auth/logout`, { method: 'POST', credentials: 'include' });
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+<script src="config.js"></script>`n</body>
+</html>

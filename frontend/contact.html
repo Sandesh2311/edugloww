@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | EduGlow</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="dark:bg-gray-900 min-h-screen">
+    <nav class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold">
+                <span class="text-primary">Edu</span>Glow
+            </a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="about.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">About</a>
+                <a href="blogs.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">Blog</a>
+                <a href="careers.html" class="text-gray-700 dark:text-gray-300 hover:text-primary">Careers</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-10">
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm">
+                <h1 class="text-3xl font-bold dark:text-white mb-4">Contact Us</h1>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">
+                    Have a question or need help? Send us a message and our team will respond within 24 hours.
+                </p>
+                <form class="space-y-4" action="https://formspree.io/f/meelejnb" method="POST">
+                    <input name="name" type="text" placeholder="Your Name" required class="w-full px-4 py-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <input name="email" type="email" placeholder="Email Address" required class="w-full px-4 py-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <input name="phone" type="tel" placeholder="Phone Number" class="w-full px-4 py-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <textarea name="message" rows="4" placeholder="How can we help?" required class="w-full px-4 py-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-white"></textarea>
+                    <button type="submit" class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg transition">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm">
+                <h2 class="text-2xl font-bold dark:text-white mb-4">Support</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">
+                    We support students, parents, and teachers across India.
+                </p>
+                <ul class="text-gray-600 dark:text-gray-300 space-y-2">
+                    <li>Email: eduglow1512@gmail.com</li>
+                    <li>Phone: +91 90000 00000</li>
+                    <li>Hours: 9:00 AM – 7:00 PM (IST)</li>
+                    <li>Location: Bengaluru, India</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+<script src="config.js"></script>`n</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | EduGlow</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="dark:bg-gray-900 min-h-screen">
+    <nav class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold">
+                    <span class="text-primary">Edu</span>Glow
+                </a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="logout-btn" class="text-gray-700 dark:text-gray-300 hover:text-primary">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-2xl" id="student-avatar">
+                            S
+                        </div>
+                        <h2 class="text-xl font-bold dark:text-white mt-4" id="student-name">Student</h2>
+                        <p class="text-gray-600 dark:text-gray-300" id="student-email">student@example.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold dark:text-white mb-4">Welcome Back</h2>
+                    <p class="text-gray-600 dark:text-gray-300">View your recent trial requests and explore tutors.</p>
+                    <div class="mt-4">
+                        <a href="index.html" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition">
+                            Find Tutors
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold dark:text-white mb-4">Recent Trial Requests</h3>
+                    <div id="trials-list" class="space-y-3 text-gray-700 dark:text-gray-300">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        feather.replace();
+        const API_BASE = window.API_BASE || "";
+
+        function renderTrials(trials) {
+            const container = document.getElementById('trials-list');
+            if (!trials.length) {
+                container.innerHTML = '<p>No trial requests yet.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            trials.forEach(trial => {
+                const item = document.createElement('div');
+                item.className = 'p-3 rounded-lg border border-gray-200 dark:border-gray-700';
+                const date = new Date(trial.created_at).toLocaleString();
+                item.innerHTML = `
+                    <div class="font-semibold">${trial.subject}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">${date}</div>
+                    <div class="text-sm">Contact: ${trial.phone}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        async function loadProfile() {
+            const res = await fetch(`${API_BASE}/api/student/profile`, { credentials: 'include' });
+            if (res.status === 401) {
+                window.location.href = 'login.html?role=student';
+                return;
+            }
+            const data = await res.json();
+            document.getElementById('student-name').textContent = data.profile.name || 'Student';
+            document.getElementById('student-email').textContent = data.profile.email || '';
+            const initial = (data.profile.name || 'S').trim().charAt(0).toUpperCase();
+            document.getElementById('student-avatar').textContent = initial;
+        }
+
+        async function loadTrials() {
+            const res = await fetch(`${API_BASE}/api/student/trials`, { credentials: 'include' });
+            if (!res.ok) {
+                renderTrials([]);
+                return;
+            }
+            const data = await res.json();
+            renderTrials(data.trials || []);
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', async function() {
+            await fetch(`${API_BASE}/api/auth/logout`, { method: 'POST', credentials: 'include' });
+            window.location.href = 'index.html';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            loadTrials();
+        });
+    </script>
+<script src="config.js"></script>`n</body>
+</html>

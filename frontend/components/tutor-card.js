@@ -167,16 +167,29 @@ class TutorCard extends HTMLElement {
                         <span class="tutor-tag">${skill}</span>
                     `).join('')}
                 </div>
-<div class="tutor-actions">
-                    <button class="tutor-button tutor-button-outline" onclick="contactTutor(${id})">
+                <div class="tutor-actions">
+                    <button class="tutor-button tutor-button-outline" data-action="contact" data-id="${id}">
                         Contact
                     </button>
-                    <button class="tutor-button tutor-button-primary" onclick="bookTutor(${id})">
+                    <button class="tutor-button tutor-button-primary" data-action="book" data-id="${id}">
                         Book
                     </button>
                 </div>
             </div>
         `;
+
+        const contactBtn = this.shadowRoot.querySelector('[data-action="contact"]');
+        const bookBtn = this.shadowRoot.querySelector('[data-action="book"]');
+        if (contactBtn) {
+            contactBtn.addEventListener('click', () => {
+                window.contactTutor(String(id));
+            });
+        }
+        if (bookBtn) {
+            bookBtn.addEventListener('click', () => {
+                window.bookTutor(String(id));
+            });
+        }
     }
 }
 
