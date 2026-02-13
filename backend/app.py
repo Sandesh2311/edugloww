@@ -27,7 +27,8 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("EDUGLOW_SECRET_KEY", "dev-secret-key-change")
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DATA_DIR / 'eduglow.db'}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 
 CORS(app, supports_credentials=True, origins=["https://eduglow1512.netlify.app"])
