@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="config.js"></script>
 </head>
 <body class="dark:bg-gray-900 min-h-screen flex items-center justify-center">
     <div class="auth-container">
@@ -86,7 +85,7 @@
     <script>
         feather.replace();
 
-        const API_BASE = (window.API_BASE || "").replace(/\/+$/, "");
+        const API_BASE = window.API_BASE || "https://eduglow-production.up.railway.app";
         const alertBox = document.getElementById('auth-alert');
 
         function showAlert(message, type = 'error') {
@@ -122,23 +121,19 @@
         }
 
         async function loginUser(role, email, password) {
-            try {
-                const res = await fetch(`${API_BASE}/api/auth/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                    body: JSON.stringify({ role, email, password })
-                });
-                const data = await res.json();
-                if (!res.ok) {
-                    showAlert(data.error || 'Login failed');
-                    return;
-                }
-                showAlert('Login successful', 'success');
-                window.location.href = role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
-            } catch (err) {
-                showAlert(`Cannot reach server (${API_BASE || 'same-origin /api'}). Check backend URL/DNS.`);
+            const res = await fetch(`${API_BASE}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ role, email, password })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                showAlert(data.error || 'Login failed');
+                return;
             }
+            showAlert('Login successful', 'success');
+            window.location.href = role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
         }
 
         document.getElementById('student-login-form').addEventListener('submit', function(e) {
@@ -169,21 +164,17 @@
                 clearAlert();
                 const email = prompt('Enter your email for password reset:');
                 if (!email) return;
-                try {
-                    const res = await fetch(`${API_BASE}/api/auth/forgot`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email })
-                    });
-                    const data = await res.json();
-                    if (!res.ok) {
-                        showAlert(data.error || 'Reset request failed');
-                        return;
-                    }
-                    showAlert('Reset link sent to your email.', 'success');
-                } catch (err) {
-                    showAlert(`Cannot reach server (${API_BASE || 'same-origin /api'}). Check backend URL/DNS.`);
+                const res = await fetch(`${API_BASE}/api/auth/forgot`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    showAlert(data.error || 'Reset request failed');
+                    return;
                 }
+                showAlert('Reset link sent to your email.', 'success');
             });
         });
 
@@ -191,5 +182,6 @@
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (prefersDark) document.documentElement.classList.add('dark');
 </script>
+<script src="config.js"></script>
 </body>
 </html>
