@@ -122,19 +122,23 @@
         }
 
         async function loginUser(role, email, password) {
-            const res = await fetch(`${API_BASE}/api/auth/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ role, email, password })
-            });
-            const data = await res.json();
-            if (!res.ok) {
-                showAlert(data.error || 'Login failed');
-                return;
+            try {
+                const res = await fetch(`${API_BASE}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ role, email, password })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    showAlert(data.error || 'Login failed');
+                    return;
+                }
+                showAlert('Login successful', 'success');
+                window.location.href = role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
+            } catch (err) {
+                showAlert(`Cannot reach server (${API_BASE || 'same-origin /api'}). Check backend URL/DNS.`);
             }
-            showAlert('Login successful', 'success');
-            window.location.href = role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
         }
 
         document.getElementById('student-login-form').addEventListener('submit', function(e) {
@@ -165,17 +169,21 @@
                 clearAlert();
                 const email = prompt('Enter your email for password reset:');
                 if (!email) return;
-                const res = await fetch(`${API_BASE}/api/auth/forgot`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                });
-                const data = await res.json();
-                if (!res.ok) {
-                    showAlert(data.error || 'Reset request failed');
-                    return;
+                try {
+                    const res = await fetch(`${API_BASE}/api/auth/forgot`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        showAlert(data.error || 'Reset request failed');
+                        return;
+                    }
+                    showAlert('Reset link sent to your email.', 'success');
+                } catch (err) {
+                    showAlert(`Cannot reach server (${API_BASE || 'same-origin /api'}). Check backend URL/DNS.`);
                 }
-                showAlert('Reset link sent to your email.', 'success');
             });
         });
 
