@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="config.js"></script>
 </head>
 <body class="dark:bg-gray-900 min-h-screen">
     <nav class="bg-white dark:bg-gray-800 shadow-sm">
@@ -138,7 +139,7 @@
     <script>
         feather.replace();
 
-        const API_BASE = window.API_BASE || "https://eduglow-production.up.railway.app";
+        const API_BASE = (window.API_BASE || "").replace(/\/+$/, "");
         let teacherData = {
             name: "",
             subject: "",
@@ -352,6 +353,5 @@
             });
         });
     </script>
-<script src="config.js"></script>
 </body>
 </html>

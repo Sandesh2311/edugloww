@@ -22,6 +22,7 @@
         }
     </script>
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="config.js"></script>
 </head>
 <body class="dark:bg-gray-900 min-h-screen">
     <nav class="bg-white dark:bg-gray-800 shadow-sm">
@@ -319,7 +320,7 @@
     <script src="script.js"></script>    <script>
         feather.replace();
 
-        const API_BASE = window.API_BASE || "https://eduglow-production.up.railway.app";
+        const API_BASE = (window.API_BASE || "").replace(/\/+$/, "");
         const fallbackTutors = [
             {id: 1, name: 'Priya Sharma', subject: 'Mathematics', level: 'Class 9-12', rating: 4.9, price: 'INR 600/hr', city: 'Delhi', image: 'http://static.photos/people/200x200/1'},
             {id: 2, name: 'Rohan Verma', subject: 'Physics', level: 'Class 11-12', rating: 4.8, price: 'INR 700/hr', city: 'Delhi', image: 'http://static.photos/people/200x200/2'},
@@ -554,6 +555,5 @@
         });
     </script>
 <script src="https://huggingface.co/deepsite/deepsite-badge.js"></script>
-<script src="config.js"></script>
 </body>
 </html>

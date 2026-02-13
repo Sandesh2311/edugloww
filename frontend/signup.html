@@ -6,6 +6,7 @@
     <title>EduGlow - Sign Up</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
 </head>
 <body class="dark:bg-gray-900 min-h-screen flex items-center justify-center">
     <div class="auth-container">
@@ -42,7 +43,7 @@
     </div>
 
     <script>
-        const API_BASE = window.API_BASE || "https://eduglow-production.up.railway.app";
+        const API_BASE = (window.API_BASE || "").replace(/\/+$/, "");
         const alertBox = document.getElementById('signup-alert');
 
         function showAlert(message, type = 'error') {
@@ -75,19 +76,22 @@
                 return;
             }
 
-            const res = await fetch(`${API_BASE}/api/auth/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ role, name, email, password })
-            });
-            const data = await res.json();
-            if (!res.ok) {
-                showAlert(data.error || 'Sign up failed');
-                return;
+            try {
+                const res = await fetch(`${API_BASE}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role, name, email, password })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    showAlert(data.error || 'Sign up failed');
+                    return;
+                }
+                showAlert('Account created. You can now login.', 'success');
+            } catch (err) {
+                showAlert('Cannot reach server. Set the correct API URL in config.js or configure Netlify /api redirect.');
             }
-            showAlert('Account created. You can now login.', 'success');
         });
     </script>
-<script src="config.js"></script>
 </body>
 </html>

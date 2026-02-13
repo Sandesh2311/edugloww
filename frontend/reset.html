@@ -6,6 +6,7 @@
     <title>EduGlow - Reset Password</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
 </head>
 <body class="dark:bg-gray-900 min-h-screen flex items-center justify-center">
     <div class="auth-container">
@@ -31,7 +32,7 @@
     </div>
 
     <script>
-        const API_BASE = window.API_BASE || "https://eduglow-production.up.railway.app";
+        const API_BASE = (window.API_BASE || "").replace(/\/+$/, "");
         const alertBox = document.getElementById('reset-alert');
         const token = window.location.pathname.split('/').pop();
 
@@ -72,6 +73,5 @@
             showAlert('Password updated. You can log in now.', 'success');
         });
     </script>
-<script src="config.js"></script>
 </body>
 </html>
