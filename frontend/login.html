@@ -85,7 +85,7 @@
     <script>
         feather.replace();
 
-        const API_BASE = window.API_BASE || "";
+        const API_BASE = window.API_BASE || "https://eduglow-production.up.railway.app";
         const alertBox = document.getElementById('auth-alert');
 
         function showAlert(message, type = 'error') {
@@ -182,5 +182,6 @@
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (prefersDark) document.documentElement.classList.add('dark');
 </script>
-<script src="config.js"></script>`n</body>
+<script src="config.js"></script>
+</body>
 </html>

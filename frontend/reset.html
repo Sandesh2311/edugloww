@@ -31,7 +31,7 @@
     </div>
 
     <script>
-        const API_BASE = window.API_BASE || ""; if (!port) return ""; return port === "5000" ? "" : "http://127.0.0.1:5000"; })();
+        const API_BASE = window.API_BASE || "https://eduglow-production.up.railway.app";
         const alertBox = document.getElementById('reset-alert');
         const token = window.location.pathname.split('/').pop();
 
@@ -72,5 +72,6 @@
             showAlert('Password updated. You can log in now.', 'success');
         });
     </script>
-<script src="config.js"></script>`n</body>
+<script src="config.js"></script>
+</body>
 </html>
